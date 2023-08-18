@@ -9,23 +9,25 @@ import UIKit
 
 class MovieDetailVC: UIViewController {
     
-    var movieId: Int!
+    var movie: Movie!
+    
+    var titleLabel = TitleLabel(textAlignment: .center, fontSize: 26)
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        view.backgroundColor = .systemPink
+        view.backgroundColor = .systemBackground
+        configure()
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func configure() {
+        view.addSubview(titleLabel)
+        titleLabel.text = movie.title
+        
+        NSLayoutConstraint.activate([
+            titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            titleLabel.heightAnchor.constraint(equalToConstant: 40)
+        ])
     }
-    */
-
+    
 }

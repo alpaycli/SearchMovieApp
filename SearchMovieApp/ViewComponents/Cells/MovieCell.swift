@@ -25,7 +25,6 @@ class MovieCell: UICollectionViewCell {
         let baseUrl = "https://image.tmdb.org/t/p/w500/"
         titleLabel.text = movie.title
         NetworkManager.shared.downloadImage(urlString: baseUrl + movie.posterPath) { [weak self] image in
-            print(baseUrl + movie.posterPath)
             guard let self = self else { return }
             DispatchQueue.main.async {
                 self.imageView.image = image
@@ -42,10 +41,10 @@ class MovieCell: UICollectionViewCell {
         translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            imageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: padding),
+            imageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
             imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: padding),
             imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -padding),
-            imageView.heightAnchor.constraint(equalTo: imageView.widthAnchor),
+            imageView.heightAnchor.constraint(equalToConstant: 120),
             
             titleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 12),
             titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: padding),

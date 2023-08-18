@@ -11,15 +11,15 @@ class NetworkManager {
     static let shared = NetworkManager()
     private init() { }
     
-    let baseUrl = "https://api.themoviedb.org/3/movie/"
+    private let baseUrl = "https://api.themoviedb.org/3/movie/"
+    private let headers = [
+        "Authorization": Const.auth,
+        "accept": Const.accept
+    ]
     
     let cache = NSCache<NSString, UIImage>()
     
     func fetchMovies(type: MovieType, completion: @escaping(Result<MovieResponse, APIError>) -> Void ) {
-        let headers = [
-            "Authorization": Const.auth,
-            "accept": Const.accept
-        ]
         let endpointUrl = baseUrl + type.rawValue + "?language=en-US&page=1"
         var urlRequest = URLRequest(url: URL(string: endpointUrl)!)
         
@@ -90,6 +90,9 @@ class NetworkManager {
         
     }
 
+    func fetchMovie(movieId: Int, completion: @escaping(Result<MovieResponse, APIError>) -> Void ) {
+        
+    }
 }
 
 

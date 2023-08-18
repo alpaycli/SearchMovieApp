@@ -31,7 +31,7 @@ class MovieListVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViewController()
-        getMovies(type: .popular)
+        getMovies(type: .topRated)
         configureCollectionView()
         configureDataSource()
     }
@@ -89,12 +89,10 @@ extension MovieListVC: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 //        let currentFollowers = isSearching ? filteredFollowers : followers
         let movie = nowShowingMovies[indexPath.item]
-        
         let destinationVC = MovieDetailVC()
-        destinationVC.movieId = movie.id
+        destinationVC.movie = movie
 //        destinationVC.delegate = self
-        let navController = UINavigationController(rootViewController: destinationVC)
-        present(navController, animated: true)
+        navigationController?.pushViewController(destinationVC, animated: true)
         
     }
     
