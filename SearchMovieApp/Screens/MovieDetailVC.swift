@@ -38,9 +38,7 @@ class MovieDetailVC: UIViewController {
     
     func configureStackView() {
         stackView.axis = .horizontal
-        stackView.distribution = .fillEqually
-        
-        stackView.alignment = .center
+        stackView.distribution = .fillEqually 
         for genre in displayableGenres {
             let element = CategoryItemView()
             element.titleLabel.text = genre
@@ -119,7 +117,6 @@ class MovieDetailVC: UIViewController {
                 DispatchQueue.main.async {
                     self.displayableGenres = items
                     self.configureStackView()
-                    
                 }
                     
             case .failure(let error):
