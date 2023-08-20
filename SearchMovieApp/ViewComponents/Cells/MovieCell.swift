@@ -10,7 +10,7 @@ import UIKit
 class MovieCell: UICollectionViewCell {
     static let reuseId = "MovieCell"
     let imageView = AvatarImageView(frame: .zero)
-    let titleLabel = TitleLabel(textAlignment: .center, fontSize: 20)
+    let titleLabel = TitleLabel(textAlignment: .center, fontSize: 14)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -37,6 +37,7 @@ class MovieCell: UICollectionViewCell {
         addSubview(titleLabel)
         
         let padding: CGFloat = 8
+        titleLabel.numberOfLines = 2
         
         translatesAutoresizingMaskIntoConstraints = false
         
@@ -46,10 +47,10 @@ class MovieCell: UICollectionViewCell {
             imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -padding),
             imageView.heightAnchor.constraint(equalToConstant: 120),
             
-            titleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 12),
-            titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: padding),
-            titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -padding),
-            titleLabel.heightAnchor.constraint(equalToConstant: 20)
+            titleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor),
+            titleLabel.leadingAnchor.constraint(equalTo: imageView.leadingAnchor),
+            titleLabel.trailingAnchor.constraint(equalTo: imageView.trailingAnchor),
+            titleLabel.heightAnchor.constraint(equalToConstant: 40)
         ])
     }
 }

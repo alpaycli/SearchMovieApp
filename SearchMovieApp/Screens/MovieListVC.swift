@@ -26,8 +26,6 @@ class MovieListVC: UIViewController {
     var collectionView: UICollectionView!
     var dataSource: UICollectionViewDiffableDataSource<Section, Movie>!
     
-    var navtext = TitleLabel(textAlignment: .left, fontSize: 30)
-
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViewController()

@@ -89,10 +89,6 @@ class NetworkManager {
         task.resume()
         
     }
-
-    func fetchMovie(movieId: Int, completion: @escaping(Result<MovieResponse, APIError>) -> Void ) {
-        
-    }
 }
 
 
