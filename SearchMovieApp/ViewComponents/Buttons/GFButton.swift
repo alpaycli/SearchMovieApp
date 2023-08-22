@@ -8,6 +8,8 @@
 import UIKit
 
 class GFButton: UIButton {
+    
+    var category: MovieType = .nowPlaying
 
     override init(frame: CGRect) {
         super.init(frame: frame)

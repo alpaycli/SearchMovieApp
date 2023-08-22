@@ -44,35 +44,27 @@ class MovieListVC: UIViewController {
         categoriesStackView.distribution = .fillEqually
         view.addSubview(categoriesStackView)
         
-        let button1 = GFButton(backgroundColor: .gray, title: "nowplaying")
-        button1.addTarget(self, action: #selector(getNowPlaying), for: .touchUpInside)
-        let button2 = GFButton(backgroundColor: .gray, title: "popular")
-        button2.addTarget(self, action: #selector(getPopularMovies), for: .touchUpInside)
-        let button3 = GFButton(backgroundColor: .gray, title: "toprated")
-        button3.addTarget(self, action: #selector(getTopRatedMovies), for: .touchUpInside)
-        let button4 = GFButton(backgroundColor: .gray, title: "upcoming")
-        button4.addTarget(self, action: #selector(getUpcomingMovies), for: .touchUpInside)
-        
-        categoriesStackView.addArrangedSubview(button1)
-        categoriesStackView.addArrangedSubview(button2)
-        categoriesStackView.addArrangedSubview(button3)
-        categoriesStackView.addArrangedSubview(button4)
-        
-        print("categoriesStackView.subviews.count", categoriesStackView.subviews.count)
-        
+        for i in MovieType.allCases {
+            let button = GFButton(backgroundColor: .systemBackground, title: i.rawValue)
+            button.category = i
+            button.addTarget(self, action: #selector(buttonAction(_ :)), for: .touchUpInside)
+            categoriesStackView.addArrangedSubview(button)
+        }
     }
     
-    @objc func getNowPlaying() {
-        getMovies(type: .nowPlaying)
-    }
-    @objc func getPopularMovies() {
-        getMovies(type: .popular)
-    }
-    @objc func getTopRatedMovies() {
-        getMovies(type: .topRated)
-    }
-    @objc func getUpcomingMovies() {
-        getMovies(type: .upcoming)
+    @objc func buttonAction(_ sender: GFButton) {
+        switch sender.category {
+        case .nowPlaying:
+            getMovies(type: .nowPlaying)
+        case .topRated:
+            getMovies(type: .topRated)
+        case .popular:
+            getMovies(type: .popular)
+        case .upcoming:
+            getMovies(type: .upcoming)
+        }
+        
+        selectedCategory = sender.category
     }
     
     private func getMovies(type: MovieType) {
