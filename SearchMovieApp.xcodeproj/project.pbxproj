@@ -24,10 +24,9 @@
 		C9AE5F412A9008F60044358A /* BodyLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AE5F402A9008F60044358A /* BodyLabel.swift */; };
 		C9AE5F432A9009020044358A /* SecondaryTitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AE5F422A9009020044358A /* SecondaryTitleLabel.swift */; };
 		C9AE5F462A9009FA0044358A /* UIView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AE5F452A9009FA0044358A /* UIView+Ext.swift */; };
-		C9AE5F4D2A915F4C0044358A /* CategoryItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AE5F4C2A915F4C0044358A /* CategoryItemView.swift */; };
-		C9AE5F4F2A9160700044358A /* CategoryContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AE5F4E2A9160700044358A /* CategoryContainerView.swift */; };
 		C9AE5F512A92168E0044358A /* Genre.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AE5F502A92168D0044358A /* Genre.swift */; };
 		C9AE5F532A9217760044358A /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AE5F522A9217760044358A /* APIService.swift */; };
+		C9AE5F582A93AE7B0044358A /* GFButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9AE5F572A93AE7B0044358A /* GFButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -50,10 +49,9 @@
 		C9AE5F402A9008F60044358A /* BodyLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyLabel.swift; sourceTree = "<group>"; };
 		C9AE5F422A9009020044358A /* SecondaryTitleLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondaryTitleLabel.swift; sourceTree = "<group>"; };
 		C9AE5F452A9009FA0044358A /* UIView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Ext.swift"; sourceTree = "<group>"; };
-		C9AE5F4C2A915F4C0044358A /* CategoryItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryItemView.swift; sourceTree = "<group>"; };
-		C9AE5F4E2A9160700044358A /* CategoryContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryContainerView.swift; sourceTree = "<group>"; };
 		C9AE5F502A92168D0044358A /* Genre.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Genre.swift; sourceTree = "<group>"; };
 		C9AE5F522A9217760044358A /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
+		C9AE5F572A93AE7B0044358A /* GFButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GFButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,6 +139,7 @@
 			isa = PBXGroup;
 			children = (
 				C922920D2A8F9BA6006B7930 /* TabBarController.swift */,
+				C9AE5F562A93AE6B0044358A /* Buttons */,
 				C922920A2A8F9701006B7930 /* Labels */,
 				C92292052A8F8EDA006B7930 /* Views */,
 				C92292022A8F8DE2006B7930 /* Cells */,
@@ -160,8 +159,6 @@
 			isa = PBXGroup;
 			children = (
 				C92292062A8F8EF5006B7930 /* AvatarImageView.swift */,
-				C9AE5F4C2A915F4C0044358A /* CategoryItemView.swift */,
-				C9AE5F4E2A9160700044358A /* CategoryContainerView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -182,6 +179,14 @@
 				C9AE5F452A9009FA0044358A /* UIView+Ext.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		C9AE5F562A93AE6B0044358A /* Buttons */ = {
+			isa = PBXGroup;
+			children = (
+				C9AE5F572A93AE7B0044358A /* GFButton.swift */,
+			);
+			path = Buttons;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -268,11 +273,10 @@
 				C9AE5F412A9008F60044358A /* BodyLabel.swift in Sources */,
 				C92292092A8F90DC006B7930 /* MovieDetailVC.swift in Sources */,
 				C92291E42A8F8235006B7930 /* SceneDelegate.swift in Sources */,
+				C9AE5F582A93AE7B0044358A /* GFButton.swift in Sources */,
 				C92291FE2A8F86DA006B7930 /* Constants.swift in Sources */,
 				C922920E2A8F9BA6006B7930 /* TabBarController.swift in Sources */,
-				C9AE5F4F2A9160700044358A /* CategoryContainerView.swift in Sources */,
 				C92292002A8F8D80006B7930 /* UIHelper.swift in Sources */,
-				C9AE5F4D2A915F4C0044358A /* CategoryItemView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
