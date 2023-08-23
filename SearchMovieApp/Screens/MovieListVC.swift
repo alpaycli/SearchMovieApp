@@ -17,21 +17,73 @@ enum MovieType: String, CaseIterable {
 
 class MovieListVC: UIViewController {
     
-    enum Section {
-        case main
-    }
-    
-    var categoriesStackView = UIStackView()
+    enum Section { case main }
     
     var selectedCategory: MovieType = .nowPlaying
     
     var movies: [Movie] = []
     
+    var scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.showsHorizontalScrollIndicator = true
+        scrollView.showsVerticalScrollIndicator = false
+        return scrollView
+    }()
+    var scrollStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.distribution = .fillEqually
+        return stackView
+    }()
+    private func configureScrollView() {
+        view.addSubview(scrollView)
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: view.centerYAnchor),
+            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+        ])
+        scrollView.addSubview(scrollStackView)
+        scrollStackView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            scrollStackView.topAnchor.constraint(equalTo: scrollView.topAnchor),
+            scrollStackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -25),
+            scrollStackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            scrollStackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor)
+        ])
+        
+        NetworkManager.shared.fetchMovies(type: .nowPlaying) { [weak self] result in
+            guard let self else { return }
+            
+            switch result {
+            case .success(let movies):
+                DispatchQueue.main.async {
+                    for item in movies.results {
+                        let posterImage = AvatarImageView(frame: .zero)
+                        let baseUrl = "https://image.tmdb.org/t/p/w500/"
+                        NetworkManager.shared.downloadImage(urlString: baseUrl + item.posterPath) { image in
+                            DispatchQueue.main.async {
+                                posterImage.image = image
+                            }
+                        }
+                        self.scrollStackView.addArrangedSubview(posterImage)
+                    }
+                }
+                
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
+    var categoriesStackView = UIStackView()
     var collectionView: UICollectionView!
     var dataSource: UICollectionViewDiffableDataSource<Section, Movie>!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureScrollView()
         configureCategoriesStackView()
         setupViewController()
         getMovies(type: selectedCategory)
@@ -45,7 +97,7 @@ class MovieListVC: UIViewController {
         view.addSubview(categoriesStackView)
         
         for i in MovieType.allCases {
-            let button = GFButton(backgroundColor: .systemBackground, title: i.rawValue)
+            let button = GFButton(backgroundColor: .systemGray, title: i.rawValue.capitalized)
             button.category = i
             button.addTarget(self, action: #selector(buttonAction(_ :)), for: .touchUpInside)
             categoriesStackView.addArrangedSubview(button)
@@ -81,7 +133,6 @@ class MovieListVC: UIViewController {
             
             self.updateData(self.movies)
         }
-        
     }
     
     private func configureCollectionView() {
@@ -93,7 +144,7 @@ class MovieListVC: UIViewController {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         categoriesStackView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            categoriesStackView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 10),
+            categoriesStackView.topAnchor.constraint(equalTo: view.centerYAnchor),
             categoriesStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             categoriesStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             categoriesStackView.heightAnchor.constraint(equalToConstant: 40),
@@ -101,7 +152,7 @@ class MovieListVC: UIViewController {
             collectionView.topAnchor.constraint(equalTo: categoriesStackView.bottomAnchor, constant: 15),
             collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor), // This might need to be adjusted based on your layout requirements
+            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
 
     }
