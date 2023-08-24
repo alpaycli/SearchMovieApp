@@ -11,16 +11,16 @@ class MovieDetailVC: UIViewController {
     
     var movie: Movie!
     
-    var posterImageView = AvatarImageView(frame: .zero)
-    var movieTitle = TitleLabel(textAlignment: .center, fontSize: 24)
+    private var posterImageView = AvatarImageView(frame: .zero)
+    private var movieTitle = TitleLabel(textAlignment: .center, fontSize: 24)
     
-    var genresStackView = UIStackView()
+    private var genresStackView = UIStackView()
     
     
-    var overviewText = TitleLabel(textAlignment: .left, fontSize: 24)
-    let bioLabel = BodyLabel(textAlignment: .left)
+    private var overviewText = TitleLabel(textAlignment: .left, fontSize: 24)
+    private let bioLabel = BodyLabel(textAlignment: .left)
         
-    var displayableGenres: [String] = []
+    private var displayableGenres: [String] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,11 +32,11 @@ class MovieDetailVC: UIViewController {
         configureUI()
     }
     
-    func configureViews() {
+    private func configureViews() {
         view.addSubviews(posterImageView, movieTitle, genresStackView, overviewText, bioLabel)
     }
     
-    func configureGenresStackView() {
+    private func configureGenresStackView() {
         genresStackView.axis = .horizontal
         genresStackView.distribution = .fillEqually
         for genre in displayableGenres {
@@ -47,7 +47,7 @@ class MovieDetailVC: UIViewController {
         print(genresStackView.subviews.count)
     }
     
-    func setImage() {
+    private func setImage() {
         let baseUrl = "https://image.tmdb.org/t/p/w500/"
         NetworkManager.shared.downloadImage(urlString: baseUrl + movie.backdropPath) { [weak self] image in
             guard let self else { return }
@@ -57,14 +57,14 @@ class MovieDetailVC: UIViewController {
         }
     }
     
-    func setElements() {
+    private func setElements() {
         movieTitle.text = movie.title
         overviewText.text = "Overview"
         bioLabel.text = movie.overview
         bioLabel.numberOfLines = 10
     }
     
-    func configureUI() {
+    private func configureUI() {
         genresStackView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             posterImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: -60),
@@ -94,13 +94,14 @@ class MovieDetailVC: UIViewController {
         ])
     }
     
-    func fetchGenres() {
+    private func fetchGenres() {
         let headers = [
             "Authorization": Const.auth,
             "accept": Const.accept
         ]
-
-        var urlRequest = URLRequest(url: URL(string: "https://api.themoviedb.org/3/genre/movie/list?language=en")!)
+        
+        guard let url = URL(string: "https://api.themoviedb.org/3/genre/movie/list?language=en") else { return }
+        var urlRequest = URLRequest(url: url)
         
         urlRequest.httpMethod = "GET"
         urlRequest.allHTTPHeaderFields = headers

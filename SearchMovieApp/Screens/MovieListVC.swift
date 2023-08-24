@@ -17,13 +17,17 @@ enum MovieType: String, CaseIterable {
 
 class MovieListVC: UIViewController {
     
+    private var numberOfViews = 2
+    
     private enum Section { case main }
     
     private var selectedCategory: MovieType = .nowPlaying
     
     private var movies: [Movie] = []
     
-    private var scrollView: UIScrollView = {
+    private var tableView = UITableView()
+    
+    private var hScrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.showsHorizontalScrollIndicator = false
         return scrollView
@@ -36,21 +40,21 @@ class MovieListVC: UIViewController {
         return stackView
     }()
     private func configureScrollView() {
-        view.addSubview(scrollView)
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(hScrollView)
+        hScrollView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: view.centerYAnchor),
-            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+            hScrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            hScrollView.bottomAnchor.constraint(equalTo: view.centerYAnchor),
+            hScrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            hScrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])
-        scrollView.addSubview(scrollStackView)
+        hScrollView.addSubview(scrollStackView)
         scrollStackView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            scrollStackView.topAnchor.constraint(equalTo: scrollView.topAnchor),
-            scrollStackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
-            scrollStackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 15),
-            scrollStackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor)
+            scrollStackView.topAnchor.constraint(equalTo: hScrollView.topAnchor),
+            scrollStackView.bottomAnchor.constraint(equalTo: hScrollView.bottomAnchor),
+            scrollStackView.leadingAnchor.constraint(equalTo: hScrollView.leadingAnchor, constant: 15),
+            scrollStackView.trailingAnchor.constraint(equalTo: hScrollView.trailingAnchor)
         ])
         
         NetworkManager.shared.fetchMovies(type: .nowPlaying) { [weak self] result in
@@ -76,12 +80,23 @@ class MovieListVC: UIViewController {
                         
                         self.scrollStackView.addArrangedSubview(posterImage)
                     }
+                    
+                    for subview in self.scrollStackView.arrangedSubviews {
+                        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.imageTapped))
+                        subview.addGestureRecognizer(tapGesture)
+                        subview.isUserInteractionEnabled = true
+                    }
+                    
                 }
-                
             case .failure(let error):
                 print(error)
             }
         }
+    }
+    @objc func imageTapped(_ movie: UIView) {
+        let destinationVC = MovieDetailVC()
+        destinationVC.movie = Movie(id: 1, originalLanguage: "Salam", originalTitle: "Salam", title: "Salam", overview: "Salam", releaseDate: "Salam", voteAverage: 1.0, backdropPath: "Salam", posterPath: "Salam", genreIds: [12, 24])
+        navigationController?.pushViewController(destinationVC, animated: true)
     }
     
     private var categoriesStackView = UIStackView()
@@ -96,6 +111,14 @@ class MovieListVC: UIViewController {
         getMovies(type: selectedCategory)
         configureCollectionView()
         configureDataSource()
+    }
+    
+    private func configureTableView() {
+        view.addSubview(tableView)
+        tableView.rowHeight = ScreenSize.height / CGFloat(numberOfViews)
+        
+        tableView.dataSource = self
+        tableView.delegate = self
     }
     
     private func configureCategoriesStackView() {
@@ -122,7 +145,6 @@ class MovieListVC: UIViewController {
         case .upcoming:
             getMovies(type: .upcoming)
         }
-        
         selectedCategory = sender.category
     }
     
@@ -200,4 +222,19 @@ extension MovieListVC: UICollectionViewDelegate {
         
     }
     
+}
+
+extension MovieListVC: UITableViewDataSource, UITableViewDelegate {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return numberOfViews
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        // cell configuration
+        return UITableViewCell()
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // navigation
+    }
 }
