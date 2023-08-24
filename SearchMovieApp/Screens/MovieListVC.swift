@@ -17,22 +17,22 @@ enum MovieType: String, CaseIterable {
 
 class MovieListVC: UIViewController {
     
-    enum Section { case main }
+    private enum Section { case main }
     
-    var selectedCategory: MovieType = .nowPlaying
+    private var selectedCategory: MovieType = .nowPlaying
     
-    var movies: [Movie] = []
+    private var movies: [Movie] = []
     
-    var scrollView: UIScrollView = {
+    private var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
-        scrollView.showsHorizontalScrollIndicator = true
-        scrollView.showsVerticalScrollIndicator = false
+        scrollView.showsHorizontalScrollIndicator = false
         return scrollView
     }()
-    var scrollStackView: UIStackView = {
+    private var scrollStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
         stackView.distribution = .fillEqually
+        stackView.spacing = 30
         return stackView
     }()
     private func configureScrollView() {
@@ -48,8 +48,8 @@ class MovieListVC: UIViewController {
         scrollStackView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             scrollStackView.topAnchor.constraint(equalTo: scrollView.topAnchor),
-            scrollStackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor, constant: -25),
-            scrollStackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+            scrollStackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            scrollStackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 15),
             scrollStackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor)
         ])
         
@@ -67,6 +67,13 @@ class MovieListVC: UIViewController {
                                 posterImage.image = image
                             }
                         }
+                        
+                        let itemWidth = (ScreenSize.width / 2) - 50
+                        let itemHeight = itemWidth * 1.5
+                        
+                        posterImage.widthAnchor.constraint(equalToConstant: itemWidth).isActive = true
+                        posterImage.heightAnchor.constraint(equalToConstant: itemHeight).isActive = true
+                        
                         self.scrollStackView.addArrangedSubview(posterImage)
                     }
                 }
@@ -77,9 +84,9 @@ class MovieListVC: UIViewController {
         }
     }
     
-    var categoriesStackView = UIStackView()
-    var collectionView: UICollectionView!
-    var dataSource: UICollectionViewDiffableDataSource<Section, Movie>!
+    private var categoriesStackView = UIStackView()
+    private var collectionView: UICollectionView!
+    private var dataSource: UICollectionViewDiffableDataSource<Section, Movie>!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -144,7 +151,7 @@ class MovieListVC: UIViewController {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         categoriesStackView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            categoriesStackView.topAnchor.constraint(equalTo: view.centerYAnchor),
+            categoriesStackView.topAnchor.constraint(equalTo: scrollStackView.bottomAnchor, constant: 10),
             categoriesStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             categoriesStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             categoriesStackView.heightAnchor.constraint(equalToConstant: 40),
