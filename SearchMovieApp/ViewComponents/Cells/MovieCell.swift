@@ -39,13 +39,15 @@ class MovieCell: UICollectionViewCell {
         let padding: CGFloat = 8
         titleLabel.numberOfLines = 2
         
+        
+        
         translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             imageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8),
             imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: padding),
             imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -padding),
-            imageView.heightAnchor.constraint(equalToConstant: 120),
+            imageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
             
             titleLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor),
             titleLabel.leadingAnchor.constraint(equalTo: imageView.leadingAnchor),
