@@ -12,17 +12,24 @@ class TabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         UITabBar.appearance().tintColor = .systemGreen
-        viewControllers = [createMovieListVC()]
+        viewControllers = [createMovieListVC(), createSearchMovieVC()]
     }
     
     
     func createMovieListVC() -> UINavigationController {
         let movieListVC = MovieListVC()
         movieListVC.title = "Movies"
-        movieListVC.tabBarItem = UITabBarItem(tabBarSystemItem: .search, tag: 0)
+        movieListVC.tabBarItem = UITabBarItem(tabBarSystemItem: .topRated, tag: 0)
         
         return UINavigationController(rootViewController: movieListVC)
     }
     
+    private func createSearchMovieVC() -> UINavigationController {
+        let searchMovieVC = SearchMovieVC()
+        searchMovieVC.title = "Search"
+        searchMovieVC.tabBarItem = UITabBarItem(tabBarSystemItem: .search, tag: 1)
+        
+        return UINavigationController(rootViewController: searchMovieVC)
+    }
     
 }

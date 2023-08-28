@@ -19,8 +19,8 @@ class NetworkManager {
     
     let cache = NSCache<NSString, UIImage>()
     
-    func fetchMovies(type: MovieType, completion: @escaping(Result<MovieResponse, APIError>) -> Void ) {
-        let endpointUrl = URL(string: "\(baseUrl + type.rawValue)?language=en-US&page=1")
+    func fetchMovies(type: MovieType, page: Int, completion: @escaping(Result<MovieResponse, APIError>) -> Void ) {
+        let endpointUrl = URL(string: "\(baseUrl + type.rawValue)?language=en-US&page=\(page)")
         guard let url = endpointUrl else { return }
         var urlRequest = URLRequest(url: url)
         
