@@ -12,10 +12,8 @@ class CategoryHeaderView: UICollectionReusableView {
     let label = UILabel()
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
         label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
-        label.text = "Section Title"
-        
+        label.text =  "Categories"
         addSubview(label)
     }
     

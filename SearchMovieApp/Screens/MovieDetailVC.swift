@@ -67,7 +67,7 @@ class MovieDetailVC: UIViewController {
     private func configureUI() {
         genresStackView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            posterImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: -60),
+            posterImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             posterImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             posterImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             posterImageView.heightAnchor.constraint(equalToConstant: 220),

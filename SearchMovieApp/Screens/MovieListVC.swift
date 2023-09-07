@@ -43,10 +43,11 @@ class MovieListVC: UIViewController {
     private func configureCategoriesStackView() {
         categoriesStackView.axis = .horizontal
         categoriesStackView.distribution = .fillEqually
+        categoriesStackView.spacing = 10
         view.addSubview(categoriesStackView)
         
         for i in MovieType.allCases {
-            let button = GFButton(backgroundColor: .systemGray, title: i.rawValue.capitalized)
+            let button = GFButton(backgroundColor: .systemGray3, title: i.rawValue.capitalized)
             button.category = i
             button.addTarget(self, action: #selector(buttonAction(_ :)), for: .touchUpInside)
             categoriesStackView.addArrangedSubview(button)
@@ -202,7 +203,7 @@ extension MovieListVC: UICollectionViewDelegate {
         let contentHeight = scrollView.contentSize.height
         let screenHeight = scrollView.frame.size.height
         
-        if scrollY > contentHeight - screenHeight {
+        if scrollY > contentHeight - screenHeight + 50 {
             guard hasMoreFollowers, !isLoadingFollowers else { return }
             getMovies(type: selectedCategory)
         }

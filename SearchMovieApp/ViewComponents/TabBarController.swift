@@ -12,7 +12,7 @@ class TabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         UITabBar.appearance().tintColor = .systemGreen
-        viewControllers = [createMovieListVC(), createSearchMovieVC()]
+        viewControllers = [createMovieListVC()]
     }
     
     
